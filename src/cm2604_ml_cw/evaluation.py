@@ -20,7 +20,7 @@ from sklearn.metrics import (
 from sklearn.model_selection import StratifiedKFold
 
 # Project root is one level above src/, so figures always go to <repo>/figures
-FIG_DIR = Path(__file__).resolve().parents[1] / "figures"
+FIG_DIR = Path("../figures")
 
 # Metrics recorded during cross-validation (churn = positive class).
 # zero_division=0 avoids warnings for the baseline, which never predicts churn.
@@ -38,10 +38,10 @@ def make_cv(random_state, n_splits=5):
 
 
 def save_fig(name, enabled=True):
-    """Save the current figure to figures/<name>.png (200 dpi) for the report."""
+    """Save the current figure to figures/<name>.png (300 dpi) for the report."""
     if enabled:
         FIG_DIR.mkdir(exist_ok=True)
-        plt.savefig(FIG_DIR / f"{name}.png", dpi=200, bbox_inches="tight")
+        plt.savefig(FIG_DIR / f"{name}.png", dpi=300, bbox_inches="tight")
 
 
 def param_label(value):
