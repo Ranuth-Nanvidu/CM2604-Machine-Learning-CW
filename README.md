@@ -1,6 +1,6 @@
 # Telco Customer Churn Prediction
 
-![Last Commit](https://img.shields.io/github/last-commit/Ranuth-Nanvidu/REPO-NAME?style=for-the-badge&logo=github&logoColor=white)
+![Last Commit](https://img.shields.io/github/last-commit/Ranuth-Nanvidu/CM2604-Machine-Learning-CW?style=for-the-badge&logo=github&logoColor=white)
 
 ![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![uv](https://img.shields.io/badge/Managed%20with-uv-6F42C1?style=for-the-badge&logo=uv&logoColor=white)
@@ -80,6 +80,21 @@ All random processes use a fixed `random_state`, so results are reproducible.
 
 ## Workflow
 
+```mermaid
+flowchart LR
+    A["Raw Kaggle CSV<br/>7,043 customers"] --> B["01 EDA<br/>quality checks, plots,<br/>statistical tests"]
+    A --> C["02 Preprocessing<br/>cleaning, target encoding,<br/>stratified 80/20 split"]
+    C --> D[("train.csv<br/>5,634 rows")]
+    C --> E[("test.csv<br/>1,409 rows")]
+    D --> F["encode()<br/>one-hot + scaling<br/>(fit on train only)"]
+    F --> G["GridSearchCV<br/>stratified 5-fold CV<br/>scoring: F1"]
+    G --> H["KNN"]
+    G --> I["Logistic Regression"]
+    G --> J["Random Forest"]
+    H & I & J --> K["Final evaluation<br/>on test set"]
+    E --> K
+```
+
 ### 1. Exploratory data analysis (`01_eda.ipynb`)
 
 - Data quality checks: types, missing values, duplicates
@@ -116,6 +131,23 @@ Test-set performance of the tuned models (churn = positive class):
 | K-Nearest Neighbours | k = 71, uniform, Manhattan | 0.600 | 0.620 | 0.610 | **0.630** | 0.850 | 0.641 |
 | Baseline (majority class) | – | 0.000 | 0.000 | 0.000 | 0.000 | 0.500 | 0.265 |
 
+### Exploratory data analysis
+ 
+<p align="center">
+  <img src="figures/01_churn_distribution.png" width="32%" alt="Churn class distribution">
+  <img src="figures/04_tenure_interactions.png" width="64%" alt="Churn rate by tenure and contract">
+</p>
+
+### Model comparison
+
+![Test-set metric comparison](figures/M05_test_metric_comparison.png)
+
+![Confusion matrices](figures/M06_confusion_matrices.png)
+
+### Effect of class weighting
+
+![Class weighting comparison](figures/M04_class_weight_comparison.png)
+
 ### Key findings
 
 - **Accuracy is misleading on this data.** Always predicting "no churn" scores 73.5% accuracy but catches no churners, so models were compared on F1, recall and AUC.
@@ -128,6 +160,6 @@ Test-set performance of the tuned models (churn = positive class):
 
 ## Author
 
-**Ranuth Nanvidu**[(@Ranuth-Nanvidu)](https://github.com/Ranuth-Nanvidu),
+**Ranuth Nanvidu** [(@Ranuth-Nanvidu)](https://github.com/Ranuth-Nanvidu),
 
 BSc (Hons) Artificial Intelligence and Data Science, IIT / Robert Gordon University.
